@@ -66,6 +66,7 @@ def least_common_char(lines, i):
 def least_common_lines(depths):
     for i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]:
         check_char = least_common_char(depths, i)
+        # list comprehension is powerful and elegant.
         left_lines = [line for line in depths if line[i] == check_char]
         if len(left_lines) == 1:
             return left_lines[0]
