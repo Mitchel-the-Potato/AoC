@@ -47,17 +47,30 @@ def check_bingo(block):
             return True
     return False
 
-def last_bingo():
+def last_bingo(blocks):
     left_blocks = list(range(100))
-    for number in numbersequence:
-        for i in left_blocks:
-            blocks[i] = markblock(blocks[i], number)
-            if check_bingo(blocks[i]):
+    for num in numbersequence:
+        for i_left in left_blocks:
+            blocks[i_left] = markblock(blocks[i_left], num)
+            if check_bingo(blocks[i_left]):
                 if len(left_blocks) == 1:
-                    return number, blocks[i]
+                    return num, blocks[i_left]
                 else:
-                    left_blocks.remove(i)
-                    print(number, len(left_blocks))
+                    left_blocks.remove(i_left)
+                    print(num, len(left_blocks))
+
+def last_bingo_v2(blocks):
+    for num in numbersequence:
+        blocks = [markblock(block, num) for block in blocks]
+        left_blocks = [block for block in blocks if not check_bingo(block)]
+        if len(left_blocks) == 0:
+            assert len(blocks) == 1
+            return num, blocks[0]
+        blocks = left_blocks
+
+
+
+
 
 def play_bingo():
     for number in numbersequence:
@@ -78,7 +91,7 @@ def sum_of_block(block):
                 sum += block[i_col][i_row]
     return sum
 
-number, block = last_bingo()
+number, block = last_bingo_v2(blocks)
 print(number, block)
 sum = sum_of_block(block)
 print(sum*number)
