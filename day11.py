@@ -43,7 +43,9 @@ def is_valid(y, x):
 
 for i in range(10000):
     number_of_flashES_this_turn = each_turn()
+    if i == 99:
+        print("q1: total flash in 100 turns: {}".format(number_of_flashes))
     if number_of_flashES_this_turn == 100:
-        print(i + 1)
+        print("q2: total {} turns for synchronization".format(i + 1))
         break
 
