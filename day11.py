@@ -20,6 +20,7 @@ def flash_neighbors(y, x):
 
 def each_turn():
     global number_of_flashes, matrix
+    number_of_flash_this_turn = 0
     for i_row in range(n_row):
         for i_column in range(n_column):
             matrix[i_row][i_column] += 1
@@ -29,7 +30,9 @@ def each_turn():
         for i_column in range(n_column):
             if matrix[i_row][i_column] >= 10:
                 matrix[i_row][i_column] = 0
-                number_of_flashes += 1
+                number_of_flash_this_turn += 1
+    number_of_flashes += number_of_flash_this_turn
+    return number_of_flash_this_turn
 
 def is_valid(y, x):
     if y < 0 or x < 0:
@@ -38,8 +41,9 @@ def is_valid(y, x):
         return False
     return True
 
-for i in range(100):
-    each_turn()
-
-print(number_of_flashes)
+for i in range(10000):
+    number_of_flashES_this_turn = each_turn()
+    if number_of_flashES_this_turn == 100:
+        print(i + 1)
+        break
 
