@@ -48,7 +48,7 @@ def fold_paper(paper, x_or_y, line_number):
                 if point_1 == "#" or point_2 == "#":
                     new_value = "#"
                 else:
-                    new_value = "."
+                    new_value = " "
                 paper2[y][x] = new_value
 
     return paper2
