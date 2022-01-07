@@ -17,11 +17,19 @@ def convert_rules_line(rule):
 with open("day14_input.txt", "r") as f:
     raw_rules = [convert_rules_line(a) for a in f.readlines()]
 
-
-
 rules = {k:v for k, v in raw_rules}
 print(raw_rules)
 print(rules)
+
+
+def string_to_pairs(ringst):
+    pairs = []
+    for i, c in enumerate(ringst):
+        if i == 0:
+            continue
+        else:
+            pairs.append(ringst[i-1 : i+1])
+    return pairs
 
 
 def insert_character(s):
@@ -35,16 +43,6 @@ def insert_character(s):
             output += v
     return output
 
-#Q2
-def string_to_pairs(ringst):
-    pairs = []
-    for i, c in enumerate(ringst):
-        if i == 0:
-            continue
-        else:
-            pairs.append(ringst[i-1 : i+1])
-    return pairs
-
 @lru_cache(100)
 def expand_pair(pair):
 
@@ -54,13 +52,11 @@ def expand_pair(pair):
             output.append(rules[keys])
         pair = "".join(output)
     return pair
-
-
 print("BN -> {}".format(expand_pair("BN")))
 
 
 @lru_cache(500)
-def repeat_pair(pair, n):
+def count_pair(pair, n):
     assert n in [10, 20, 30, 40, 50, 60]
     if n == 10:
         expand_string = expand_pair(pair)
@@ -70,18 +66,18 @@ def repeat_pair(pair, n):
         expand_string = expand_pair(pair)
         count = Counter()
         for pear in string_to_pairs(expand_string):
-            this_count = repeat_pair(pear, n-10)
+            this_count = count_pair(pear, n - 10)
             count = count + this_count
         return count
 
 
-def repeat_string(s, n):
+def count_string(s, n):
     count = Counter()
     pairs = string_to_pairs(s)
     for pair in pairs:
-        this_count = repeat_pair(pair, n)
+        this_count = count_pair(pair, n)
         count = count + this_count
     count[s[0]] += 1
     return count
 
-print(repeat_string(inputs, 40))
+print(count_string(inputs, 40))
